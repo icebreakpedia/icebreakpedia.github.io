@@ -27,11 +27,15 @@
 
         async function generateRoomNumber() {
             try {
-                const response = await fetch(`${backendUrl}/generate-and-store`);
+                const response = await fetch(`${backendUrl}/generate-and-store`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({}) // Empty body as expected by server.js
+                });
                 if (!response.ok) throw new Error('Network response was not ok');
-                const roomNumber = await response.text();
-                currentRoomNumber = roomNumber;
-                document.getElementById('roomNumber').innerText = `Room Number: ${roomNumber}`;
+                const data = await response.json(); // Expect JSON response
+                currentRoomNumber = data.roomID;
+                document.getElementById('roomNumber').innerText = `Room Number: ${data.roomID}`;
                 pollText(); // Start polling for text updates
             } catch (err) {
                 console.error('Error:', err);
