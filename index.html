@@ -1,9 +1,94 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Blank Website</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Number Website</title>
+    <style>
+        #inputForm { display: none; }
+        #display { margin-top: 20px; }
+    </style>
 </head>
 <body>
-    <h1>hi</h1>
+    <h1>Room Number Website</h1>
+    <button onclick="generateRoomNumber()">Display</button>
+    <button onclick="showInput()">Input</button>
+    <div id="roomNumber"></div>
+    <div id="inputForm">
+        <input type="text" id="inputRoomNumber" placeholder="Enter 6-digit room number" maxlength="6">
+        <input type="text" id="inputText" placeholder="Enter text">
+        <button onclick="submitInput()">Submit</button>
+    </div>
+    <div id="display"></div>
+
+    <script>
+        let currentRoomNumber = '';
+        const backendUrl = 'http://localhost:3000'; // Replace with Render URL after deployment
+
+        async function generateRoomNumber() {
+            try {
+                const response = await fetch(`${backendUrl}/generate-room`);
+                if (!response.ok) throw new Error('Network response was not ok');
+                const roomNumber = await response.text();
+                currentRoomNumber = roomNumber;
+                document.getElementById('roomNumber').innerText = `Room Number: ${roomNumber}`;
+                pollText(); // Start polling for text updates
+            } catch (err) {
+                console.error('Error:', err);
+                alert('Error generating room number');
+            }
+        }
+
+        function showInput() {
+            document.getElementById('inputForm').style.display = 'block';
+        }
+
+        async function submitInput() {
+            const roomNumber = document.getElementById('inputRoomNumber').value;
+            const text = document.getElementById('inputText').value;
+            try {
+                const response = await fetch(`${backendUrl}/input`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ roomNumber, text })
+                });
+                if (!response.ok) throw new Error('Network response was not ok');
+                const message = await response.text();
+                alert(message);
+            } catch (err) {
+                console.error('Error:', err);
+                alert('Error submitting text');
+            }
+        }
+
+        async function pollText() {
+            if (!currentRoomNumber) return;
+            try {
+                const response = await fetch(`${backendUrl}/get-text/${currentRoomNumber}`);
+                if (!response.ok) throw new Error('Network response was not ok');
+                const text = await response.text();
+                if (text) {
+                    document.getElementById('display').innerHTML += `<p>${text}</p>`;
+                }
+                setTimeout(pollText, 2000); // Poll every 2 seconds
+            } catch (err) {
+                console.error('Error polling text:', err);
+            }
+        }
+
+        window.addEventListener('beforeunload', async () => {
+            if (currentRoomNumber) {
+                try {
+                    await fetch(`${backendUrl}/delete-room`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ roomNumber: currentRoomNumber })
+                    });
+                } catch (err) {
+                    console.error('Error deleting room:', err);
+                }
+            }
+        });
+    </script>
 </body>
 </html>
