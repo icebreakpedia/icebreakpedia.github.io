@@ -72,7 +72,7 @@
                 if (!response.ok) throw new Error('Network response was not ok');
                 const text = await response.text();
                 if (text) {
-                    document.getElementById('display').innerHTML += `<p>${text}</p>`;
+                    document.getElementById('display').innerHTML = `<p>${text}</p>`;
                 }
                 setTimeout(pollText, 2000); // Poll every 2 seconds
             } catch (err) {
