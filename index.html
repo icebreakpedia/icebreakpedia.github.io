@@ -23,11 +23,11 @@
 
     <script>
         let currentRoomNumber = '';
-        const backendUrl = 'http://localhost:3000'; // Replace with Render URL after deployment
+        const backendUrl = 'https://backend-miiu.onrender.com'; // Replace with Render URL after deployment
 
         async function generateRoomNumber() {
             try {
-                const response = await fetch(`${backendUrl}/generate-room`);
+                const response = await fetch(`${backendUrl}/generate-and-store`);
                 if (!response.ok) throw new Error('Network response was not ok');
                 const roomNumber = await response.text();
                 currentRoomNumber = roomNumber;
