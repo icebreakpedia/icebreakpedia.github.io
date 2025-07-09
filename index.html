@@ -68,13 +68,17 @@
         async function pollText() {
             if (!currentRoomNumber) return;
             try {
-                const response = await fetch(`${backendUrl}/get-text/${currentRoomNumber}`);
+                const response = await fetch(`${backendUrl}/get-text`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ roomNumber: currentRoomNumber })
+                });
                 if (!response.ok) throw new Error('Network response was not ok');
                 const text = await response.text();
                 if (text) {
                     document.getElementById('display').innerHTML = `<p>${text}</p>`;
                 }
-                setTimeout(pollText, 2000); // Poll every 2 seconds
+                setTimeout(pollText, 2000);
             } catch (err) {
                 console.error('Error polling text:', err);
             }
