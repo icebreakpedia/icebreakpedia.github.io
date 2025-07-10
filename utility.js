@@ -139,7 +139,7 @@ async function pollText() {
         if (text) {
             document.getElementById('display').innerHTML = `<p>${text}</p>`;
         }
-        //setTimeout(pollText, 2000);
+        setTimeout(pollText, 100);
     } catch (err) {
         console.error('Error polling text:', err);
     }
