@@ -12,12 +12,11 @@ function updateMessage(roomNumber) {
         return response.json();
     })
     .then(data => {
-        console.log(data.message || 'Text submitted');
-        document.getElementById('inputForm').style.display = 'none';
+        //console.log(data.message || 'Text submitted');
     })
     .catch(err => {
         console.error('Error:', err);
-        alert('Error submitting input');
+        //alert('Error submitting input');
     });
 }
 
