@@ -30,32 +30,23 @@ function setupButtonHandlers(roomNumber) {
 
     buttons.forEach(({ id, key }) => {
         const button = document.getElementById(id);
-        if (!button) {
-            console.error(`Button ${id} not found`);
-            alert('Botton disappear');
-            return;
-        }
         button.addEventListener('mousedown', () => {
             pressedKeys.add(key);
             updateMessage(roomNumber);
-            alert('ok');
         });
         button.addEventListener('touchstart', (e) => {
             e.preventDefault();
             pressedKeys.add(key);
             updateMessage(roomNumber);
-            alert('ok');
         });
         button.addEventListener('mouseup', () => {
             pressedKeys.delete(key);
             updateMessage(roomNumber);
-            alert('ok');
         });
         button.addEventListener('touchend', (e) => {
             e.preventDefault();
             pressedKeys.delete(key);
             updateMessage(roomNumber);
-            alert('ok');
         });
     });
 }
