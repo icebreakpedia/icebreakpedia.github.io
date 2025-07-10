@@ -1,3 +1,4 @@
+<!--
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -183,5 +184,37 @@
             generateRoomNumber();
         }
     </script>
+</body>
+</html>
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Number Website</title>
+    <style>
+        #inputForm { display: none; }
+        #display { margin-top: 20px; }
+        #messageDisplay { margin-top: 10px; font-weight: bold; }
+        #qrCode { margin-top: 10px; }
+        #qrVideo { display: none; width: 100%; max-width: 400px; }
+        #stopCamera { display: none; margin-top: 10px; }
+    </style>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+    <script defer src="utility.js"></script>
+</head>
+<body>
+    <h1>Room Number Website 1.7</h1>
+    <div id="qrCode"></div>
+    <div id="inputForm">
+        <input type="text" id="inputRoomNumber" maxlength="6" style="display: none;">
+        <input type="text" id="inputText" placeholder="Enter text">
+        <button onclick="submitInput()">Submit</button>
+    </div>
+    <div id="display"></div>
+    <video id="qrVideo"></video>
+    <button id="stopCamera" onclick="stopCamera()">Stop Camera</button>
 </body>
 </html>
