@@ -4,6 +4,24 @@ const backendUrl = 'https://backend-miiu.onrender.com'; // Replace with Render U
 function isMobileDevice() {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }
+
+function requestFullScreen() {
+    const elem = document.documentElement;
+    if (elem.requestFullscreen) {
+        elem.requestFullscreen().catch(err => {
+            console.error('Fullscreen request failed:', err);
+            document.getElementById('fullScreenButton').style.display = 'inline-block';
+        });
+    } else {
+        document.getElementById('fullScreenButton').style.display = 'inline-block';
+    }
+    document.body.classList.add('fullscreen');
+    document.getElementById('inputForm').classList.add('fullscreen');
+    document.getElementById('qrVideo').classList.add('fullscreen');
+    document.getElementById('controllerButtons').classList.add('fullscreen');
+    document.getElementById('stopCamera').classList.add('fullscreen');
+}
+
 async function scanQRCode() {
     const video = document.getElementById('qrVideo');
     video.style.display = 'block';
@@ -31,14 +49,7 @@ async function scanQRCode() {
                     document.getElementById('stopCamera').style.display = 'none';
                     document.getElementById('inputRoomNumber').value = roomNumber;
 
-                    //fullscreen
-                    if (document.documentElement.requestFullscreen) {
-                        document.documentElement.requestFullscreen();
-                    } else if (document.documentElement.webkitRequestFullscreen) { /* Safari */
-                        document.documentElement.webkitRequestFullscreen();
-                    } else if (document.documentElement.msRequestFullscreen) { /* IE11 */
-                        document.documentElement.msRequestFullscreen();
-                    }
+                    
 
                     showInput();
                     setupButtonHandlers(roomNumber);
