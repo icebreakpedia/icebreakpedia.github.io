@@ -88,7 +88,7 @@ async function generateRoomNumber() {
 function showInput() {
             document.getElementById('inputForm').style.display = 'block';
 }
-
+/*
 async function submitInput() {
     const roomNumber = document.getElementById('inputRoomNumber').value;
     const text = document.getElementById('inputText').value;
@@ -106,7 +106,7 @@ async function submitInput() {
         alert('Error submitting text');
     }
 }
-        
+*/      
 async function pollText() {
     if (!currentRoomNumber) return;
     try {
