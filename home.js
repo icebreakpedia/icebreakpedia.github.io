@@ -38,20 +38,24 @@ function setupButtonHandlers(roomNumber) {
         button.addEventListener('mousedown', () => {
             pressedKeys.add(key);
             updateMessage(roomNumber);
+            alert('ok');
         });
         button.addEventListener('touchstart', (e) => {
             e.preventDefault();
             pressedKeys.add(key);
             updateMessage(roomNumber);
+            alert('ok');
         });
         button.addEventListener('mouseup', () => {
             pressedKeys.delete(key);
             updateMessage(roomNumber);
+            alert('ok');
         });
         button.addEventListener('touchend', (e) => {
             e.preventDefault();
             pressedKeys.delete(key);
             updateMessage(roomNumber);
+            alert('ok');
         });
     });
 }
