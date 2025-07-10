@@ -17,6 +17,24 @@
         #downButton { grid-column: 2; }
         #leftButton { grid-column: 1; grid-row: 2; }
         #rightButton { grid-column: 3; grid-row: 2; }
+
+        body.fullscreen {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: #000;
+        }
+        #inputForm.fullscreen, #qrVideo.fullscreen { width: 100%; max-width: none; }
+        #controllerButtons.fullscreen { max-width: 300px; gap: 15px; }
+        #controllerButtons.fullscreen button { padding: 30px; font-size: 24px; }
+        #stopCamera.fullscreen { font-size: 18px; padding: 15px; }
+
     </style>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
