@@ -16,9 +16,7 @@
     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
 </head>
 <body>
-    <h1>Room Number Website 1.5</h1>
-    <button onclick="generateRoomNumber()">Display</button>
-    <button onclick="handleInput()">Input</button>
+    <h1>Room Number Website 1.6</h1>
     <div id="roomNumber"></div>
     <div id="qrCode"></div>
     <div id="inputForm">
@@ -181,6 +179,11 @@
                 }
             }
         });
+        if (isMobileDevice()) {
+            scanQRCode();
+        } else {
+            generateRoomNumber();
+        }
     </script>
 </body>
 </html>
