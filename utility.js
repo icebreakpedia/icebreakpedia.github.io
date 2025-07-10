@@ -31,6 +31,7 @@ async function scanQRCode() {
                     document.getElementById('stopCamera').style.display = 'none';
                     document.getElementById('inputRoomNumber').value = roomNumber;
                     showInput();
+                    setupButtonHandlers(roomNumber);
                 } else {
                     requestAnimationFrame(scan);
                 }
