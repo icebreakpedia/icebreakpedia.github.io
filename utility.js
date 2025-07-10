@@ -105,7 +105,7 @@ async function generateRoomNumber() {
 }
 
 function showInput() {
-            document.getElementById('inputForm').style.display = 'block';
+    document.getElementById('inputForm').style.display = 'block';
 }
 /*
 async function submitInput() {
