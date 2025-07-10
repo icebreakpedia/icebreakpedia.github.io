@@ -14,6 +14,7 @@
     <button onclick="generateRoomNumber()">Display</button>
     <button onclick="showInput()">Input</button>
     <div id="roomNumber"></div>
+    <div id="qrCode"></div>
     <div id="inputForm">
         <input type="text" id="inputRoomNumber" placeholder="Enter 6-digit room number" maxlength="6">
         <input type="text" id="inputText" placeholder="Enter text">
@@ -21,6 +22,7 @@
     </div>
     <div id="display"></div>
 
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
     <script>
         let currentRoomNumber = '';
         const backendUrl = 'https://backend-miiu.onrender.com'; // Replace with Render URL after deployment
@@ -36,6 +38,17 @@
                 const data = await response.json(); // Expect JSON response
                 currentRoomNumber = data.roomID;
                 document.getElementById('roomNumber').innerText = `Room Number: ${data.roomID}`;
+
+                // Generate QR code
+                document.getElementById('qrCode').innerHTML = ''; // Clear previous QR code
+                QRCode.toCanvas(data.roomID, { width: 200 }, (error, canvas) => {
+                    if (error) {
+                        console.error('Error generating QR code:', error);
+                        return;
+                    }
+                    document.getElementById('qrCode').appendChild(canvas);
+                });
+
                 pollText(); // Start polling for text updates
             } catch (err) {
                 console.error('Error:', err);
