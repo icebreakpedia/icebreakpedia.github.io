@@ -4,7 +4,7 @@ const backendUrl = 'https://backend-miiu.onrender.com'; // Replace with Render U
 function isMobileDevice() {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }
-
+/*
 function requestFullScreen() {
     const elem = document.documentElement;
     if (elem.requestFullscreen) {
@@ -21,7 +21,7 @@ function requestFullScreen() {
     document.getElementById('controllerButtons').classList.add('fullscreen');
     document.getElementById('stopCamera').classList.add('fullscreen');
 }
-
+*/
 async function scanQRCode() {
     const video = document.getElementById('qrVideo');
     video.style.display = 'block';
