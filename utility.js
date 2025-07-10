@@ -30,6 +30,16 @@ async function scanQRCode() {
                     video.style.display = 'none';
                     document.getElementById('stopCamera').style.display = 'none';
                     document.getElementById('inputRoomNumber').value = roomNumber;
+
+                    //fullscreen
+                    if (elem.requestFullscreen) {
+                        elem.requestFullscreen();
+                    } else if (elem.webkitRequestFullscreen) { /* Safari */
+                        elem.webkitRequestFullscreen();
+                    } else if (elem.msRequestFullscreen) { /* IE11 */
+                        elem.msRequestFullscreen();
+                    }
+
                     showInput();
                     setupButtonHandlers(roomNumber);
                 } else {
