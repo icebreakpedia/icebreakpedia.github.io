@@ -7,13 +7,18 @@
     <style>
         #inputForm { display: none; }
         #display { margin-top: 20px; }
+        #messageDisplay { margin-top: 10px; font-weight: bold; }
+        #qrCode { margin-top: 10px; }
+        #qrVideo { display: none; width: 100%; max-width: 400px; }
+        #stopCamera { display: none; margin-top: 10px; }
     </style>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
 </head>
 <body>
-    <h1>Room Number Website 1.4</h1>
+    <h1>Room Number Website 1.5</h1>
     <button onclick="generateRoomNumber()">Display</button>
-    <button onclick="showInput()">Input</button>
+    <button onclick="handleInput()">Input</button>
     <div id="roomNumber"></div>
     <div id="qrCode"></div>
     <div id="inputForm">
@@ -22,9 +27,76 @@
         <button onclick="submitInput()">Submit</button>
     </div>
     <div id="display"></div>
+    <video id="qrVideo"></video>
+    <button id="stopCamera" onclick="stopCamera()">Stop Camera</button>
     <script>
         let currentRoomNumber = '';
         const backendUrl = 'https://backend-miiu.onrender.com'; // Replace with Render URL after deployment
+
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
+        function handleInput() {
+            if (isMobileDevice()) {
+                scanQRCode();
+            } else {
+                showInput();
+            }
+        }
+
+        async function scanQRCode() {
+            const video = document.getElementById('qrVideo');
+            video.style.display = 'block';
+            document.getElementById('stopCamera').style.display = 'block';
+
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+                video.srcObject = stream;
+                video.play();
+
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+
+                const scan = () => {
+                    if (video.readyState === video.HAVE_ENOUGH_DATA) {
+                        canvas.width = video.videoWidth;
+                        canvas.height = video.videoHeight;
+                        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                        const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+                        const code = jsQR(imageData.data, canvas.width, canvas.height);
+                        if (code) {
+                            const roomNumber = code.data;
+                            stream.getTracks().forEach(track => track.stop());
+                            video.style.display = 'none';
+                            document.getElementById('stopCamera').style.display = 'none';
+                            document.getElementById('inputRoomNumber').value = roomNumber;
+                            showInput();
+                        } else {
+                            requestAnimationFrame(scan);
+                        }
+                    } else {
+                        requestAnimationFrame(scan);
+                    }
+                };
+                scan();
+            } catch (err) {
+                console.error('Error accessing camera:', err);
+                alert('Error accessing camera');
+                showInput();
+            }
+        }
+
+        function stopCamera() {
+            const video = document.getElementById('qrVideo');
+            const stream = video.srcObject;
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+            }
+            video.style.display = 'none';
+            document.getElementById('stopCamera').style.display = 'none';
+            showInput();
+        }
 
         async function generateRoomNumber() {
             try {
