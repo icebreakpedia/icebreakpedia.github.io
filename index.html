@@ -16,11 +16,11 @@
     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
 </head>
 <body>
-    <h1>Room Number Website 1.6</h1>
+    <h1>Room Number Website 1.7</h1>
     <div id="roomNumber"></div>
     <div id="qrCode"></div>
     <div id="inputForm">
-        <input type="text" id="inputRoomNumber" placeholder="Enter 6-digit room number" maxlength="6">
+        <input type="text" id="inputRoomNumber" maxlength="6" readonly>
         <input type="text" id="inputText" placeholder="Enter text">
         <button onclick="submitInput()">Submit</button>
     </div>
@@ -34,14 +34,14 @@
         function isMobileDevice() {
             return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         }
-
+        /*
         function handleInput() {
             if (isMobileDevice()) {
                 scanQRCode();
             } else {
                 showInput();
             }
-        }
+        }*/
 
         async function scanQRCode() {
             const video = document.getElementById('qrVideo');
