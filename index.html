@@ -8,6 +8,7 @@
         #inputForm { display: none; }
         #display { margin-top: 20px; }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
 </head>
 <body>
     <h1>Room Number Website 1.2</h1>
@@ -22,7 +23,6 @@
     </div>
     <div id="display"></div>
 
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
     <script>
         let currentRoomNumber = '';
         const backendUrl = 'https://backend-miiu.onrender.com'; // Replace with Render URL after deployment
