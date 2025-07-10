@@ -17,7 +17,7 @@
 </head>
 <body>
     <h1>Room Number Website 1.7</h1>
-    <div id="roomNumber"></div>
+    <!--<div id="roomNumber"></div>-->
     <div id="qrCode"></div>
     <div id="inputForm">
         <input type="text" id="inputRoomNumber" maxlength="6" readonly>
@@ -106,7 +106,6 @@
                 if (!response.ok) throw new Error('Network response was not ok');
                 const data = await response.json(); // Expect JSON response
                 currentRoomNumber = data.roomID;
-                document.getElementById('roomNumber').innerText = `Room Number: ${data.roomID}`;
 
                 // Generate QR code
                 const qrCodeContainer = document.getElementById('qrCode');
