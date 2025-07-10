@@ -48,7 +48,7 @@ async function scanQRCode() {
                     video.style.display = 'none';
                     document.getElementById('stopCamera').style.display = 'none';
                     document.getElementById('inputRoomNumber').value = roomNumber;
-                    requestFullScreen()
+                    requestFullScreen();
                     showInput();
                     setupButtonHandlers(roomNumber);
                 } else {
