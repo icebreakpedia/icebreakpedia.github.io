@@ -150,6 +150,7 @@ if (isMobileDevice()) {
 let currentRoomNumber = '';
 const backendUrl = 'https://backend-miiu.onrender.com'; // Replace with Render URL after deployment
 const wsUrl = 'wss://backend-miiu.onrender.com';
+let ws = null;
 
 function isMobileDevice() {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -227,7 +228,7 @@ function stopCamera() {
 }
 
 function connectWebSocket(roomNumber) {
-    if (ws && ws.readyState === WebSocket.OPEN) {
+    if (typeof ws !== 'undefined' && ws && ws.readyState === WebSocket.OPEN) {
         ws.close();
     }
     ws = new WebSocket(`${wsUrl}?roomNumber=${roomNumber}`);
