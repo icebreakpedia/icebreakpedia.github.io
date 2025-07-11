@@ -281,6 +281,16 @@ function showInput() {
     document.getElementById('inputForm').style.display = 'block';
 }
 
+function TurnPage(filename,where){
+    var req=new XMLHttpRequest();
+    req.open("get","https://icebreakpedia.github.io/"+filename);
+    req.onload=function(){
+        var content=document.getElementById(where);
+        content.innerHTML=this.responseText;
+    };
+    req.send();
+}
+
 window.addEventListener('beforeunload', async () => {
     if (document.fullscreenElement) {
         document.exitFullscreen().catch(() => {});
