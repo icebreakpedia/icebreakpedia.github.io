@@ -254,7 +254,7 @@ async function generateRoomNumber() {
         new QRCode(qrCodeContainer, data.roomID);
 
         // Redirect to game.html with roomNumber
-        window.location.href = `?roomNumber=${encodeURIComponent(data.roomID)}`;
+        //window.location.href = `?roomNumber=${encodeURIComponent(data.roomID)}`;
     } catch (err) {
         console.error('Error:', err);
         alert('Error generating room number');
