@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Mode</title>
+    <script src="home.js" defer></script>
+    <script src="utility.js" defer></script>
+    <style>
+        body { margin: 0; font-family: Arial, sans-serif; text-align: center; }
+        #display { margin: 20px; font-size: 18px; }
+        #controllerButtons { margin: 20px; }
+        button { 
+            padding: 15px 30px; 
+            margin: 5px; 
+            font-size: 16px; 
+            cursor: pointer; 
+            background-color: #4CAF50; 
+            color: white; 
+            border: none; 
+            border-radius: 5px; 
+        }
+        .fullscreen #controllerButtons { margin: 10px; }
+    </style>
+</head>
+<body>
+    <div id="display">Waiting for input...</div>
+    <div id="controllerButtons">
+        <button id="upButton">Up</button>
+        <button id="leftButton">Left</button>
+        <button id="rightButton">Right</button>
+        <button id="downButton">Down</button>
+    </div>
+</body>
+</html>
