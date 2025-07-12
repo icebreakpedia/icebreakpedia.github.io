@@ -1,4 +1,3 @@
-<!--
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,36 +58,5 @@
     <video id="qrVideo"></video>
     <button id="stopCamera" onclick="stopCamera()">Stop Camera</button>
     <button id="fullScreenButton" onclick="requestFullScreen()">Go Full Screen</button>
-</body>
-</html>
--->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QR Code Interaction</title>
-    <script defer src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.0/build/qrcode.min.js"></script>
-    <script src="utility.js" defer></script>
-    <script src="home.js" defer></script>
-</head>
-<body>
-    <div id="qrCode"></div>
-    <div id="display"></div>
-    <div id="inputForm" style="display:none;">
-        <p id="status"></p>
-        <input type="text" id="inputRoomNumber" placeholder="Room Number">
-        <button id="submitButton">Submit</button>
-        <div id="controllerButtons">
-            <button id="upButton">Up</button>
-            <button id="leftButton">Left</button>
-            <button id="rightButton">Right</button>
-            <button id="downButton">Down</button>
-        </div>
-    </div>
-    <video id="qrVideo" style="display:none;"></video>
-    <button id="stopCamera" style="display:none;">Stop Camera</button>
-    <button id="fullScreenButton" style="display:none;">Go Full Screen</button>
 </body>
 </html>
