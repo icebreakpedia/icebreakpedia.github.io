@@ -308,6 +308,7 @@ window.addEventListener('beforeunload', async () => {
 
 document.addEventListener('DOMContentLoaded', () => {
     if (window.location.pathname.includes('index.html')) {
+        console.log("hi");
         if (isMobileDevice()) {
             requestFullScreen();
             scanQRCode();
