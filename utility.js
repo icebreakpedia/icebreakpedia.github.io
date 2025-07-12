@@ -308,7 +308,7 @@ window.addEventListener('beforeunload', async () => {
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log("hi");
-    if (window.location.pathname.includes('index.html')) {
+    if (window.location.pathname === '/') {
         console.log("hi");
         if (isMobileDevice()) {
             requestFullScreen();
