@@ -307,6 +307,7 @@ window.addEventListener('beforeunload', async () => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
+    console.log("hi");
     if (window.location.pathname.includes('index.html')) {
         console.log("hi");
         if (isMobileDevice()) {
