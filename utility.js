@@ -201,11 +201,11 @@ async function scanQRCode() {
                 const code = jsQR(imageData.data, canvas.width, canvas.height);
                 if (code) {
                     const roomNumber = code.data;
+                    currentRoomNumber = roomNumber;
                     stream.getTracks().forEach(track => track.stop());
                     video.style.display = 'none';
                     document.getElementById('stopCamera').style.display = 'none';
-                    // Redirect to game.html with roomNumber
-                    window.location.href = `game.html?roomNumber=${encodeURIComponent(roomNumber)}`;
+                    window.location.href = `/game.html?roomNumber=${encodeURIComponent(roomNumber)}`;
                 } else {
                     requestAnimationFrame(scan);
                 }
@@ -243,21 +243,61 @@ async function generateRoomNumber() {
         const data = await response.json();
         currentRoomNumber = data.roomID;
 
-        // Generate QR code
         const qrCodeContainer = document.getElementById('qrCode');
         qrCodeContainer.innerHTML = '';
+
+        // Check if QRCode library is loaded
         if (typeof QRCode === 'undefined') {
             console.error('QRCode library not loaded');
-            alert('Error: QR code library failed to load');
+            qrCodeContainer.innerHTML = `
+                <p>QR code generation failed. Please use this Room ID:</p>
+                <p style="font-size: 18px; font-weight: bold;">${data.roomID}</p>
+            `;
             return;
         }
-        new QRCode(qrCodeContainer, data.roomID);
 
-        // Redirect to game.html with roomNumber
-        //window.location.href = `?roomNumber=${encodeURIComponent(data.roomID)}`;
+        // Generate QR code
+        try {
+            new QRCode(qrCodeContainer, {
+                text: data.roomID,
+                width: 256,
+                height: 256,
+                colorDark: '#000000',
+                colorLight: '#ffffff',
+                correctLevel: QRCode.CorrectLevel.H
+            });
+            // Display roomID below QR code
+            const roomIdText = document.createElement('p');
+            roomIdText.textContent = `Room ID: ${data.roomID}`;
+            roomIdText.style.cssText = 'font-size: 18px; margin-top: 10px;';
+            qrCodeContainer.appendChild(roomIdText);
+            // Show Enter Game Mode button
+            const enterGameButton = document.getElementById('enterGameButton');
+            enterGameButton.style.display = 'block';
+            enterGameButton.onclick = () => {
+                window.location.href = `/game.html?roomNumber=${encodeURIComponent(data.roomID)}`;
+            };
+            // Connect WebSocket for non-mobile to receive messages
+            connectWebSocket(data.roomID);
+        } catch (err) {
+            console.error('Error generating QR code:', err);
+            qrCodeContainer.innerHTML = `
+                <p>QR code generation failed. Please use this Room ID:</p>
+                <p style="font-size: 18px; font-weight: bold;">${data.roomID}</p>
+            `;
+            // Show Enter Game Mode button even in fallback
+            const enterGameButton = document.getElementById('enterGameButton');
+            enterGameButton.style.display = 'block';
+            enterGameButton.onclick = () => {
+                window.location.href = `/game.html?roomNumber=${encodeURIComponent(data.roomID)}`;
+            };
+            // Connect WebSocket for non-mobile
+            connectWebSocket(data.roomID);
+        }
     } catch (err) {
         console.error('Error:', err);
         alert('Error generating room number');
+        document.getElementById('qrCode').innerHTML = '<p>Error generating room number. Please try again.</p>';
     }
 }
 
@@ -307,12 +347,26 @@ window.addEventListener('beforeunload', async () => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
-    if (window.location.pathname === '/') {
-        if (isMobileDevice()) {
-            requestFullScreen();
-            scanQRCode();
+    const pathname = window.location.pathname;
+    if (pathname === '/' || pathname === '/index.html') {
+        // Ensure QRCode script is loaded before proceeding
+        const qrScript = document.querySelector('script[src*="qrcode.min.js"]');
+        if (qrScript && !window.QRCode) {
+            qrScript.addEventListener('load', () => {
+                if (isMobileDevice()) {
+                    requestFullScreen();
+                    scanQRCode();
+                } else {
+                    generateRoomNumber();
+                }
+            });
         } else {
-            generateRoomNumber();
+            if (isMobileDevice()) {
+                requestFullScreen();
+                scanQRCode();
+            } else {
+                generateRoomNumber();
+            }
         }
     }
 });

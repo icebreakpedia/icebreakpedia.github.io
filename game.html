@@ -24,12 +24,19 @@
     </style>
 </head>
 <body>
-    <div id="display">Waiting for input...</div>
-    <div id="controllerButtons">
+    <div id="display" style="display: none;">Waiting for input...</div>
+    <div id="controllerButtons" style="display: none;">
         <button id="upButton">Up</button>
         <button id="leftButton">Left</button>
         <button id="rightButton">Right</button>
         <button id="downButton">Down</button>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const isMobile = isMobileDevice(); // From utility.js
+            document.getElementById('display').style.display = isMobile ? 'none' : 'block';
+            document.getElementById('controllerButtons').style.display = isMobile ? 'block' : 'none';
+        });
+    </script>
 </body>
 </html>

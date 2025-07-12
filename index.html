@@ -73,9 +73,9 @@
     <script src="utility.js" defer></script>
     <style>
         body { margin: 0; font-family: Arial, sans-serif; text-align: center; }
-        #qrVideo, #qrCode, #stopCamera, #fullScreenButton { margin: 20px; }
+        #qrVideo, #qrCode, #stopCamera, #fullScreenButton, #enterGameButton { margin: 20px; }
         #qrVideo { width: 100%; max-width: 500px; }
-        #stopCamera, #fullScreenButton { 
+        #stopCamera, #fullScreenButton, #enterGameButton { 
             padding: 10px 20px; 
             font-size: 16px; 
             cursor: pointer; 
@@ -84,7 +84,7 @@
             border: none; 
             border-radius: 5px; 
         }
-        .fullscreen #qrVideo, .fullscreen #qrCode, .fullscreen #stopCamera, .fullscreen #fullScreenButton {
+        .fullscreen #qrVideo, .fullscreen #qrCode, .fullscreen #stopCamera, .fullscreen #fullScreenButton, .fullscreen #enterGameButton {
             margin: 10px;
         }
     </style>
@@ -94,5 +94,6 @@
     <video id="qrVideo" style="display: none;"></video>
     <button id="stopCamera" style="display: none;">Stop Camera</button>
     <button id="fullScreenButton" style="display: none;">Go Full Screen</button>
+    <button id="enterGameButton" style="display: none;">Enter Game Mode</button>
 </body>
 </html>

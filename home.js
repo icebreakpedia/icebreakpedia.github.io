@@ -106,7 +106,6 @@ function setupButtonHandlers(roomNumber) {
     });
 }
 
-// Initialize game mode with roomNumber from URL
 document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const roomNumber = urlParams.get('roomNumber');
