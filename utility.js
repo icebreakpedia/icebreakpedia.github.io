@@ -275,10 +275,18 @@ async function generateRoomNumber() {
         qrCodeContainer.innerHTML = '';
         if (typeof QRCode === 'undefined') {
             console.error('QRCode library not loaded');
-            alert('Error: QR code library failed to load');
+            alert('Error: QR code library is not available');
             return;
         }
-        new QRCode(qrCodeContainer, data.roomID);
+        QRCode.toCanvas(data.roomID, { errorCorrectionLevel: 'H' }, function(error, canvas) {
+            if (error) {
+                console.error('Error generating QR code:', error);
+                alert('Error generating QR code');
+                return;
+            }
+            qrCodeContainer.innerHTML = '';
+            qrCodeContainer.appendChild(canvas);
+        });
 
         connectWebSocket(data.roomID);
         document.getElementById('display').innerText = 'Waiting for connection...';
